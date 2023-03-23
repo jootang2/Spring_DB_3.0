@@ -47,4 +47,17 @@ public class BasicTxTest {
         txManager.rollback(status);
         log.info("트랜젝션 롤백 완료");
     }
+
+    @Test
+    void double_commit() {
+        log.info("트랜잭션1 시작");
+        TransactionStatus tx1 = txManager.getTransaction(new DefaultTransactionAttribute());
+        log.info("트랜잭션1 커밋");
+        txManager.commit(tx1);
+
+        log.info("트랜잭션2 시작");
+        TransactionStatus tx2 = txManager.getTransaction(new DefaultTransactionAttribute());
+        log.info("트랜잭션2 롤백");
+        txManager.rollback(tx2);
+    }
 }
